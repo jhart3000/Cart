@@ -1,5 +1,6 @@
 package com.example.cart.controller;
 
+import com.example.cart.exception.CartException;
 import com.example.cart.pojos.Cart;
 import com.example.cart.pojos.CartRequest;
 import com.example.cart.pojos.Receipt;
@@ -12,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class CartController {
 
-  @Autowired CartService service;
+  @Autowired private CartService service;
 
   @GetMapping("/add/book/{numberOfBooks}/dvd/{numberOfDvds}/voucher/{numberOfVouchers}/{clearCart}")
   public Cart addItemsToCart(
@@ -27,7 +28,7 @@ public class CartController {
   }
 
   @GetMapping("/payAndPrintReceipt/{day}")
-  public Receipt payAndPrintReceipt(@PathVariable("day") String day) {
+  public Receipt payAndPrintReceipt(@PathVariable("day") String day) throws CartException {
     return service.payAndPrintReceipt(day);
   }
 }

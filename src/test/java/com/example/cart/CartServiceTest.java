@@ -13,12 +13,12 @@ import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 
 @SpringBootTest
-public class CartServiceTest {
+class CartServiceTest {
 
-  @Autowired CartService service;
+  @Autowired private CartService service;
 
   @Test
-  public void testAddItemsToCartIfClearCartIsTrue() {
+  void testAddItemsToCartIfClearCartIsTrue() {
     CartRequest cartRequest = new CartRequest(3, 4, 1, true);
     Cart cart = service.addItemsToCart(cartRequest);
     assertThat(cart.getNumberOfBooks()).isEqualTo(3);
@@ -31,7 +31,7 @@ public class CartServiceTest {
   }
 
   @Test
-  public void testAddItemsToCartIfClearCartIsNotTrue() {
+  void testAddItemsToCartIfClearCartIsNotTrue() {
     CartRequest cartRequest = new CartRequest(3, 4, 1, true);
     Cart cart = service.addItemsToCart(cartRequest);
     assertThat(cart.getNumberOfBooks()).isEqualTo(3);
@@ -45,7 +45,7 @@ public class CartServiceTest {
   }
 
   @Test
-  public void testAddItemsToCartCreateCartIfItsAlreadyNull() {
+  void testAddItemsToCartCreateCartIfItsAlreadyNull() {
     CartRequest cartRequest = new CartRequest(3, 4, 1, false);
     Cart cart = service.addItemsToCart(cartRequest);
     assertThat(cart.getNumberOfBooks()).isEqualTo(3);
@@ -59,7 +59,7 @@ public class CartServiceTest {
   }
 
   @Test
-  public void testPayAndPrintingReceiptOnFridayZeroBooks() {
+  void testPayAndPrintingReceiptOnFridayZeroBooks() throws CartException {
     CartRequest cartRequest = new CartRequest(0, 3, 1, true);
     service.addItemsToCart(cartRequest);
     Receipt receipt = service.payAndPrintReceipt("Friday");
@@ -73,7 +73,7 @@ public class CartServiceTest {
   }
 
   @Test
-  public void testPayAndPrintingReceiptOnMondayZeroDvds() {
+  void testPayAndPrintingReceiptOnMondayZeroDvds() throws CartException {
     CartRequest cartRequest = new CartRequest(4, 0, 1, true);
     service.addItemsToCart(cartRequest);
     Receipt receipt = service.payAndPrintReceipt("Monday");
@@ -87,7 +87,7 @@ public class CartServiceTest {
   }
 
   @Test
-  public void testPayAndPrintingReceiptOnMondayZeroVouchers() {
+  void testPayAndPrintingReceiptOnMondayZeroVouchers() throws CartException {
     CartRequest cartRequest = new CartRequest(4, 3, 0, true);
     service.addItemsToCart(cartRequest);
     Receipt receipt = service.payAndPrintReceipt("Monday");
@@ -101,7 +101,7 @@ public class CartServiceTest {
   }
 
   @Test
-  public void throwExceptionWhenCartIsNull() {
+  void throwExceptionWhenCartIsNull() {
     Throwable thrown = catchThrowable(() -> service.payAndPrintReceipt("Monday"));
     assertThat(thrown)
         .isInstanceOf(CartException.class)

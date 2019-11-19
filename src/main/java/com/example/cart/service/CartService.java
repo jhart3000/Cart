@@ -2,14 +2,19 @@ package com.example.cart.service;
 
 import com.example.cart.client.PaymentClient;
 import com.example.cart.exception.CartException;
-import com.example.cart.pojos.*;
+import com.example.cart.pojos.Book;
+import com.example.cart.pojos.Cart;
+import com.example.cart.pojos.CartRequest;
+import com.example.cart.pojos.DVD;
+import com.example.cart.pojos.Receipt;
+import com.example.cart.pojos.Voucher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class CartService {
 
-  @Autowired PaymentClient client;
+  @Autowired private PaymentClient client;
 
   private Cart cart;
 
@@ -29,7 +34,7 @@ public class CartService {
     return cart;
   }
 
-  public Receipt payAndPrintReceipt(String day) {
+  public Receipt payAndPrintReceipt(String day) throws CartException {
 
     if (cart == null) {
       throw new CartException("You must add items to cart before paying and printing receipt");
@@ -91,8 +96,6 @@ public class CartService {
 
     double remainderOfBooksAfterDividingByTwo = totalNumberOfBooks % 2;
     double numberOfBooksHalfPrice = totalNumberOfBooks - remainderOfBooksAfterDividingByTwo;
-    double booksTotal =
-        numberOfBooksHalfPrice * bookPrice * 0.5 + remainderOfBooksAfterDividingByTwo * bookPrice;
-    return booksTotal;
+    return numberOfBooksHalfPrice * bookPrice * 0.5 + remainderOfBooksAfterDividingByTwo * bookPrice;
   }
 }
