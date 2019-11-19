@@ -96,6 +96,7 @@ public class CartService {
 
     double remainderOfBooksAfterDividingByTwo = totalNumberOfBooks % 2;
     double numberOfBooksHalfPrice = totalNumberOfBooks - remainderOfBooksAfterDividingByTwo;
-    return numberOfBooksHalfPrice * bookPrice * 0.5 + remainderOfBooksAfterDividingByTwo * bookPrice;
+    return numberOfBooksHalfPrice * bookPrice * 0.5
+        + remainderOfBooksAfterDividingByTwo * bookPrice;
   }
 }
